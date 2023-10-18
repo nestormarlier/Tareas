@@ -1,0 +1,52 @@
+
+# Archivos y directorios generados automáticamente
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.log
+*.pot
+*.bak
+*.swp
+*.swo
+*.egg-info/
+celerybeat-schedule
+celerybeat.pid
+
+# Archivos de configuración local
+*.env
+local_settings.py
+db.sqlite3
+
+# Archivos de registro
+logs/
+*.log
+
+# Directorios de archivos estáticos y archivos compilados
+staticfiles/
+*.css
+*.js
+*.map
+
+# Virtual environment
+venv/
+
+# Archivos de dependencias
+*.lock
+
+# Directorios y archivos específicos para herramientas de desarrollo
+.vscode/
+.idea/
+*.pyc
+
+# Archivos de caché de pruebas
+__pycache__/
+
+# Archivos de migraciones
+*/migrations/
+
+# Archivos generados por el sistema operativo o el IDE
+.DS_Store
+Thumbs.db
