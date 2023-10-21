@@ -19,6 +19,7 @@ class Task(models.Model):
             ('COMPLETADA', 'Completada')
     )
         TIPO_TAREA = (
+        ('OTRO', 'Otro'),
         ('CORRECTIVA', 'Correctiva'),
         ('PREVENTIVA', 'Preventiva'),
         ('PREDICTIVA', 'Predictiva')
