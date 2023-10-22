@@ -2,13 +2,12 @@ from django.contrib import admin
 from .models import Activo,Task
 from django.utils import timezone
 from django.utils.html import format_html
+from django_admin_multi_select_filter.filters import MultiSelectFieldListFilter
 
 
 class TaskAdmin(admin.ModelAdmin):
     exclude = ('user',)  # Excluye el campo "usuario" del formulario de administración
     readonly_fields = ('user','completed_at', 'completed_user',)  # Hace que el campo "usuario" sea de solo lectura
-    
-    
 
     def priority_color(self, obj):
         if obj.priority == 'ALTA':
@@ -20,7 +19,7 @@ class TaskAdmin(admin.ModelAdmin):
         return ''
 
     priority_color.short_description = 'Prioridad'
-    
+
     def priority_color_css(self, obj):
         return format_html('<span class="{}">{}</span>', self.priority_color(obj), obj.get_priority_display())
 
@@ -29,7 +28,7 @@ class TaskAdmin(admin.ModelAdmin):
     priority_color_css.short_description = 'Prioridad'
 
     list_display = ('maquina','description','tipo','priority_color_css', 'state', 'user', 'completed_user')
-    list_filter = ('state', 'priority','tipo',)  # Agrega el filtro para el campo "tipo"
+    list_filter = (('state',MultiSelectFieldListFilter), 'tipo','priority',)
 
     def has_delete_permission(self, request, obj=None):
         if obj and obj.state == 'COMPLETADA':
