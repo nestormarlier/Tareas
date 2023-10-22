@@ -2,7 +2,7 @@
 Sistema de seguimientos de tareas con estados, tipos, prioridad por máquina y/o activo 
 Usar Django Django==4.0.6 --> ya que el deploy esta en pythonanywhere que es el que soporta
 la carpeta templates debe ir en settings.py la direccion exacta para que funcione
-
+pip install django_admin_multi_select_filter --> para que funcione el multipleselect
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
