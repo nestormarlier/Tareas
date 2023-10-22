@@ -1,11 +1,34 @@
 from django.contrib import admin
 from .models import Activo,Task
 from django.utils import timezone
+from django.utils.html import format_html
+
 
 class TaskAdmin(admin.ModelAdmin):
     exclude = ('user',)  # Excluye el campo "usuario" del formulario de administración
     readonly_fields = ('user','completed_at', 'completed_user',)  # Hace que el campo "usuario" sea de solo lectura
-    list_display = ('maquina','description','tipo','priority', 'state', 'user', 'completed_user')
+    
+    
+
+    def priority_color(self, obj):
+        if obj.priority == 'ALTA':
+            return 'alta-priority'
+        elif obj.priority == 'MEDIA':
+            return 'media-priority'
+        elif obj.priority == 'BAJA':
+            return 'baja-priority'
+        return ''
+
+    priority_color.short_description = 'Prioridad'
+    
+    def priority_color_css(self, obj):
+        return format_html('<span class="{}">{}</span>', self.priority_color(obj), obj.get_priority_display())
+
+
+    priority_color_css.allow_tags = True
+    priority_color_css.short_description = 'Prioridad'
+
+    list_display = ('maquina','description','tipo','priority_color_css', 'state', 'user', 'completed_user')
     list_filter = ('state', 'priority','tipo',)  # Agrega el filtro para el campo "tipo"
 
     def has_delete_permission(self, request, obj=None):
