@@ -26,7 +26,7 @@ class TaskAdmin(admin.ModelAdmin):
 
     priority_color_css.allow_tags = True
     priority_color_css.short_description = 'Prioridad'
-
+    search_fields = ['maquina__nombre']
     list_display = ('maquina','description','tipo','priority_color_css', 'state', 'user', 'completed_user')
     list_filter = (('state',MultiSelectFieldListFilter), 'tipo','priority',)
 
