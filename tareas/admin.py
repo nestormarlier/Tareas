@@ -3,9 +3,15 @@ from .models import Activo,Task
 from django.utils import timezone
 from django.utils.html import format_html
 from django_admin_multi_select_filter.filters import MultiSelectFieldListFilter
+# from import_export import resources
+from import_export.admin import ImportExportModelAdmin
 
+# class TaskResource(resources.ModelResource):
+#     class Meta:
+#         model = Task
 
-class TaskAdmin(admin.ModelAdmin):
+class TaskAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    # resources_Task = [TaskResource]
     exclude = ('user',)  # Excluye el campo "usuario" del formulario de administración
     readonly_fields = ('user','completed_at', 'completed_user',)  # Hace que el campo "usuario" sea de solo lectura
 
