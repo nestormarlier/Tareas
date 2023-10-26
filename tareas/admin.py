@@ -13,7 +13,7 @@ from import_export.admin import ImportExportModelAdmin
 class TaskAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     # resources_Task = [TaskResource]
     exclude = ('user',)  # Excluye el campo "usuario" del formulario de administración
-    readonly_fields = ('user','completed_at', 'completed_user',)  # Hace que el campo "usuario" sea de solo lectura
+    readonly_fields = ('user','created_at','completed_at', 'completed_user',)  # Hace que el campo "usuario" sea de solo lectura
 
     def priority_color(self, obj):
         if obj.priority == 'ALTA':
@@ -55,7 +55,7 @@ class TaskAdmin(ImportExportModelAdmin,admin.ModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         if obj and obj.state == 'COMPLETADA':
-            return self.readonly_fields + ('description', 'priority', 'state')
+            return self.readonly_fields + ('maquina','tipo','description', 'priority', 'state')
         return self.readonly_fields
 
 admin.site.site_header = 'Sistema de gestión de tareas'
