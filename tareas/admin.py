@@ -44,6 +44,9 @@ class TaskAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         if not change:  # Si es una nueva tarea
             obj.user = request.user  # Asigna el usuario logueado
+            if 'state' in form.changed_data and form.cleaned_data['state'] == 'COMPLETADA':
+                obj.completed_user = request.user
+                obj.completed_at = timezone.now()  # Establece la fecha actual como fecha de finalización
         else:
             if 'state' in form.changed_data and form.cleaned_data['state'] == 'COMPLETADA':
                 obj.completed_user = request.user
