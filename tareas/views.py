@@ -18,7 +18,9 @@ def generar_grafico(request):
     tareas_por_estado = [entry['total_tareas'] for entry in recuentos_por_estado]
 
     # Cuenta de tareas por prioridad
-    tareas_por_prioridad = [5, 10, 30]  # Reemplaza con tus datos reales
+    # tareas_por_prioridad = [5, 10, 30]
+    recuentos_por_prioridad = Task.objects.values('priority').annotate(total_tareas=models.Count('id'))
+    tareas_por_prioridad = [entry['total_tareas'] for entry in recuentos_por_prioridad]
 
     # Cuenta de tareas por tipo
     tareas_por_tipo = [8, 15, 12, 25]  # Reemplaza con tus datos reales
