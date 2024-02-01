@@ -10,7 +10,7 @@ def generar_grafico(request):
     # Datos de ejemplo (puedes reemplazarlos con tus datos reales de la base de datos)
     estados = ['Completada', 'Pendiente', 'En proceso']
     prioridades = ['Alta', 'Baja', 'Media']
-    tipos = ['Otro', 'Correctiva', 'Preventiva', 'Predictiva']
+    tipos = ['Correctiva', 'Otro', 'Predictiva', 'Preventiva']
 
     # Cuenta de tareas por estado
     # tareas_por_estado = [10, 20, 15]
@@ -23,8 +23,11 @@ def generar_grafico(request):
     tareas_por_prioridad = [entry['total_tareas'] for entry in recuentos_por_prioridad]
 
     # Cuenta de tareas por tipo
-    tareas_por_tipo = [8, 15, 12, 25]  # Reemplaza con tus datos reales
+    # tareas_por_tipo = [8, 15, 12, 25]  
+    recuentos_por_tipo = Task.objects.values('tipo').annotate(total_tareas=models.Count('id'))
+    tareas_por_tipo = [entry['total_tareas'] for entry in recuentos_por_tipo]
 
+    
     # Generar gráficos
     fig, axs = plt.subplots(3, 1, figsize=(10, 15))
 

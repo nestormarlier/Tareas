@@ -1,9 +1,20 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Gráfico de Tareas</title>
 </head>
 <body>
+    <div>
+        <ul class="object-tools">
+            <li>
+                <a href="{% url 'admin:index' %}" class="addlink">
+                    <img src="{% static 'admin/img/icon-changelink.svg' %}" alt="Redirigir a Otra Página">
+                    Sistema de gestión de tareas
+                </a>
+            </li>
+        </ul>
+    </div>
     <div>
         <img src="data:image/png;base64,{{ graphic }}" alt="Gráfico de Tareas">
     </div>

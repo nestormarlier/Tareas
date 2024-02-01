@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.urls import reverse #crear boton grafico
+from django.http import HttpResponseRedirect # direccionar boton grafico
 from .models import Activo,Task
 from django.utils import timezone
 from django.utils.html import format_html
@@ -6,10 +8,12 @@ from django_admin_multi_select_filter.filters import MultiSelectFieldListFilter
 # from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 
+
 # class TaskResource(resources.ModelResource):
 #     class Meta:
 #         model = Task
 # @admin.register(Task)
+
 class TaskAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     list_display = ('maquina','description','created_at','dias_transcurridos','tipo','priority_color_css', 'state_color_css', 'user', 'completed_user')
     list_filter = (('state',MultiSelectFieldListFilter), 'tipo','priority',)
@@ -96,9 +100,12 @@ class TaskAdmin(ImportExportModelAdmin,admin.ModelAdmin):
         if obj and obj.state == 'COMPLETADA':
             return self.readonly_fields + ('maquina','tipo','description', 'priority', 'state')
         return self.readonly_fields
+    
+    
 
 admin.site.site_header = 'Sistema de gestión de tareas'
 admin.site.index_title = 'Área de características'                 # default:
 admin.site.site_title = 'Sistema de gestión' # default: "Django site admin"
+
 admin.site.register(Task,TaskAdmin)
 admin.site.register(Activo)
