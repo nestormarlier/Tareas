@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import generar_grafico
+from .views import tarea_x_estado
 
 urlpatterns = [
-    path('', generar_grafico, name="grafico"),
+    path('', tarea_x_estado, name="tareas")
 ]
