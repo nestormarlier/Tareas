@@ -20,4 +20,30 @@ def tarea_x_estado(request):
 
     total_por_estado =[total_completadas,total_pendientes,total_proceso]
 
-    return render(request, 'tareas/graficos.html', {'totales_por_estado': total_por_estado})
+    tareas_correctivas = tareas.filter(tipo='CORRECTIVA')
+    tareas_preventivas = tareas.filter(tipo='PREVENTIVA')
+    tareas_predictiva = tareas.filter(tipo='PREDICTIVA')
+    tareas_otro = tareas.filter(tipo='OTRO')
+
+    total_correctiva= tareas_correctivas.count()
+    total_preventivas=tareas_preventivas.count()
+    total_predictivas=tareas_predictiva.count()
+    total_otro=tareas_otro.count()
+
+    total_por_tipo = [total_correctiva,total_preventivas,total_predictivas,total_otro]
+
+    tareas_alta = tareas.filter(priority='ALTA')
+    tareas_media = tareas.filter(priority='MEDIA')
+    tareas_baja = tareas.filter(priority='BAJA')
+
+    total_alta=tareas_alta.count()
+    total_media=tareas_media.count()
+    total_baja=tareas_baja.count()
+
+    total_por_prioridad = [total_alta,total_media,total_baja]
+    
+    return render(request, 'tareas/graficos.html', {
+        'totales_por_estado': total_por_estado,
+        'totales_por_tipo': total_por_tipo,
+        'totales_por_prioridad': total_por_prioridad
+        })
