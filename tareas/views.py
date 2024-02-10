@@ -44,6 +44,9 @@ def tarea_x_estado(request):
     total_por_prioridad = [total_alta,total_media,total_baja]
     
     return render(request, 'tareas/graficos.html', {
+        'total_completadas' : total_completadas,
+        'total_pendientes': total_pendientes,
+        'total_proceso':total_proceso,
         'total_tareas': total_tareas,
         'totales_por_estado': total_por_estado,
         'totales_por_tipo': total_por_tipo,

@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gráfico de Tareas</title>
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
 
     <!-- Incluye los archivos CSS de Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -27,273 +29,308 @@
     <style>
         .chart-container {
             display: flex;
-            justify-content: space-between; /* Adjust alignment as needed */
-        }    
-        .chart-container > div {
-            width: 30%; /* Adjust the width as needed */
-            margin: 0 1%; /* Adjust the margin as needed */
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .chart-container-item {
+            width: calc(33.33% - 20px); /* Set each chart container to one-third width with some spacing in between */
+            margin-bottom: 20px;
+        }
+
+        .highcharts-figure {
+            margin: 0;
         }
     </style>
+    <br>
+    <br>
     <div class="chart-container">
         <! CONTENEDOR TAREAS POR ESTADO -->
-        {% comment %} <div> {% endcomment %}
-            <div id="container"></div>
-            <script type="application/javascript">
-            Highcharts.chart('container', {
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: 'Tareas por Estado',
-                    align: 'center'
-                },
-                subtitle: {
-                    text:
-                        '',
-                    align: 'center'
-                },
-                xAxis: {
-                    categories: ['Completada', 'Pendiente', 'En Proceso'],
-                    crosshair: true,
-                    accessibility: {
-                        description: 'Estados'
-                    }
-                },
-                yAxis: {
-                    min: 0,
+        <div class="chart-container-item">
+            <figure class="highcharts-figure">
+                <div id="containerbarraytorta"></div>
+                <p class="highcharts-description">
+                </p>
+            </figure>
+            <script>
+                Highcharts.chart('containerbarraytorta', {
                     title: {
-                        text: 'Cantidad de tareas'
-                    }
-                },
-                tooltip: {
-                    valueSuffix: ' Tareas'
-                },
-                plotOptions: {
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0,
-                        {% comment %} colorBycoloPoint: true {% endcomment %}
-                    }
-                },
-                
-                series: [
-                    {
+                        text: 'Tareas por Estado',
+                        align: 'left'
+                    },
+                    xAxis: {
+                        categories: ['Completada', 'Pendiente', 'En Proceso']
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Tareas'
+                        }
+                    },
+                    tooltip: {
+                        valueSuffix: ''
+                    },
+                    plotOptions: {
+                        series: {
+                            borderRadius: '25%'
+                        }
+                    },
+                    series: [{
+                        type: 'column',
                         name: '',
                         data: [{
-                            name: 'Point 1',
+                            name: 'Completada',
                             color: '#00FF00',
                             y: {{totales_por_estado.0}}
                         }, {
-                            name: 'Point 2',
+                            name: 'Pendiente',
                             color: 'red',
                             y: {{totales_por_estado.1}}
                         },
                         {
-                            name: 'Point 2',
+                            name: 'En Proceso',
                             color: 'yellow',
                             y: {{totales_por_estado.2}}
                         }],
-                    }
-                ]
-            });
-            </script>
-        {% comment %} </div> {% endcomment %}
-        <! FIN CONTENEDOR TAREAS POR ESTADO  -->
-        <hr>
-        <! CONTENEDOR TAREAS POR TIPO  -->
-        {% comment %} <div> {% endcomment %}
-            <div id="containerdos"></div>
-            <script type="application/javascript">
-            Highcharts.chart('containerdos', {
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: 'Tareas por Tipo',
-                    align: 'center'
-                },
-                subtitle: {
-                    text:
-                        '',
-                    align: 'center'
-                },
-                xAxis: {
-                    categories: ['Corretiva', 'Preventiva', 'Predictiva', 'Otro'],
-                    crosshair: true,
-                    accessibility: {
-                        description: ''
-                    }
-                },
-                yAxis: {
-                    min: 0,
-                    title: {
-                        text: 'Cantidad de tareas'
-                    }
-                },
-                tooltip: {
-                    valueSuffix: ' Tareas'
-                },
-                plotOptions: {
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0,
-                        colorByPoint: true
-                    }
-                },
-                series: [
-                    {
+                    }, {
+                        type: 'line',
+                        step: 'center',
                         name: '',
-                        data: {{ totales_por_tipo }}
-                    }
-                ]
-            });
-            </script>
-        {% comment %} </div> {% endcomment %}
-        <! FIN CONTENEDOR TAREAS POR TIPO  -->
-        <hr>
-        <! CONTENEDOR TAREAS POR PRIORIDAD  -->
-        {% comment %} <div> {% endcomment %}
-            <div id="containertres"></div>
-            <script type="application/javascript">
-            Highcharts.chart('containertres', {
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'Tareas por Prioridad',
-                align: 'center'
-            },
-            subtitle: {
-                text:
-                    '',
-                align: 'center'
-            },
-            xAxis: {
-                categories: ['Alta', 'Baja', 'Media'],
-                crosshair: true,
-                accessibility: {
-                    description: ''
-                }
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Cantidad de tareas'
-                }
-            },
-            tooltip: {
-                valueSuffix: ' Tareas'
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0,
-                    colorByPoint: true
-                }
-            },
-            series: [
-                {
-                    name: '',
-                    data: [{
-                        name: 'Point 1',
-                        color: 'red',
-                        y: {{totales_por_prioridad.0}}
+                        data: [{{totales_por_estado.0}}, {{totales_por_estado.1}}, {{totales_por_estado.2}}],
+                        marker: {
+                            lineWidth: 2,
+                            lineColor: Highcharts.getOptions().colors[1],
+                            fillColor: 'white'
+                        }
                     }, {
-                        name: 'Point 2',
-                        color: '#00FF00',
-                        y: {{totales_por_prioridad.1}}
-                    },
-                    {
-                        name: 'Point 2',
-                        color: 'yellow',
-                        y: {{totales_por_prioridad.2}}
-                    }],
-                }
-            ]
-            });
-            </script>  
-        {% comment %} </div> {% endcomment %}
-        <! FIN CONTENEDOR TAREAS POR PRIORIDAD  -->
-    </div>
-
-    <! CONTENEDOR GRAFICOS PIE  -->
-    <figure class="highcharts-figure">
-        <div id="containerpie"></div>
-        <p class="highcharts-description">
-            Gráfico con todas las tareas.
-        </p>
-    </figure>
-    <script>
-        Highcharts.chart('containerpie', {
-            chart: {
-                type: 'pie'
-            },
-            title: {
-                text: {{total_tareas}} +' Tareas'
-            },
-            tooltip: {
-                valueSuffix: '%'
-            },
-            subtitle: {
-                text:
-                ''
-            },
-            plotOptions: {
-                series: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: [{
-                        enabled: true,
-                        distance: 20
-                    }, {
-                        enabled: true,
-                        distance: -40,
-                        format: '{point.percentage:.1f}%',
-                        style: {
-                            fontSize: '1.2em',
-                            textOutline: 'none',
-                            opacity: 0.7
-                        },
-                        filter: {
-                            operator: '>',
-                            property: 'percentage',
-                            value: 10
+                        type: 'pie',
+                        name: '% ',
+                        data: [{
+                            name: 'Completada',
+                            y: + (({{totales_por_estado.0}}*100)/{{total_tareas}}).toFixed(1),
+                            color: '#00FF00', // 
+                            dataLabels: {
+                                enabled: true,
+                                distance: -50,
+                                format: '{{total_tareas}} Tareas',
+                                style: {
+                                    fontSize: '15px'
+                                }
+                            }
+                        }, {
+                            name: 'Pendiente',
+                            y: +(({{totales_por_estado.1}}*100)/{{total_tareas}}).toFixed(1),
+                            color: 'red',
+                        }, {
+                            name: 'En Proceso',
+                            y: +(({{totales_por_estado.2}}*100)/{{total_tareas}}).toFixed(1),
+                            color:'yellow',
+                        }],
+                        center: [45, 15],
+                        size: 100,
+                        innerSize: '70%',
+                        showInLegend: false,
+                        dataLabels: {
+                            enabled: false
                         }
                     }]
-                }
-            },
-            series: [
-                {
-                    name: 'Porcentage',
-                    colorByPoint: true,
-                    data: [
-                        {
-                            name: 'Agua',
-                            y: 55.02
-                        },
-                        {
-                            name: 'Fat',
-                            sliced: true,
-                            selected: true,
-                            y: 26.71
-                        },
-                        {
-                            name: 'Carbohydrates',
-                            y: 1.09
-                        },
-                        {
-                            name: 'Protein',
-                            y: 15.5
-                        },
-                        {
-                            name: 'Ash',
-                            y: 1.68
+                });        
+            </script>
+        </div>
+        <! FIN CONTENEDOR TAREAS POR ESTADO  -->
+        <! CONTENEDOR TAREAS POR TIPO  -->
+        <div class="chart-container-item">
+            <figure class="highcharts-figure">
+                <div id="containerbarraytortados"></div>
+                <p class="highcharts-description">
+                </p>
+            </figure>
+            <script>
+                Highcharts.chart('containerbarraytortados', {
+                    title: {
+                        text: 'Tareas por Tipo',
+                        align: 'left'
+                    },
+                    xAxis: {
+                        categories: ['Corretiva', 'Preventiva', 'Predictiva', 'Otro']
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Tareas'
                         }
-                    ]
-                }
-            ]
-        });
-    </script>
+                    },
+                    tooltip: {
+                        valueSuffix: ''
+                    },
+                    plotOptions: {
+                        series: {
+                            borderRadius: '25%'
+                        }
+                    },
+                    series: [{
+                        type: 'column',
+                        name: '',
+                        data: [{
+                            name: 'Corretiva',
+                            color: '#00FF00',
+                            y: {{totales_por_tipo.0}}
+                        }, {
+                            name: 'Preventiva',
+                            color: 'red',
+                            y: {{totales_por_tipo.1}}
+                        },
+                        {
+                            name: 'En Proceso',
+                            color: 'yellow',
+                            y: {{totales_por_tipo.2}}
+                        },
+                        {
+                            name: 'Otro',
+                            color: 'blue',
+                            y: {{totales_por_tipo.3}}
+                        }],
+                    }, {
+                        type: 'line',
+                        step: 'center',
+                        name: '',
+                        data: [{{totales_por_tipo.0}}, {{totales_por_tipo.1}}, {{totales_por_tipo.2}},{{totales_por_tipo.3}}],
+                        marker: {
+                            lineWidth: 2,
+                            lineColor: Highcharts.getOptions().colors[1],
+                            fillColor: 'white'
+                        }
+                    }, {
+                        type: 'pie',
+                        name: '% ',
+                        data: [{
+                            name: 'Corretiva',
+                            y: + (({{totales_por_tipo.0}}*100)/{{total_tareas}}).toFixed(1),
+                            color: '#00FF00', // 
+                            dataLabels: {
+                                enabled: true,
+                                distance: -50,
+                                format: '{{total_tareas}} Tareas',
+                                style: {
+                                    fontSize: '15px'
+                                }
+                            }
+                        }, {
+                            name: 'Preventiva',
+                            y: +(({{totales_por_tipo.1}}*100)/{{total_tareas}}).toFixed(1),
+                            color: 'red',
+                        }, {
+                            name: 'Predictiva',
+                            y: +(({{totales_por_tipo.2}}*100)/{{total_tareas}}).toFixed(1),
+                            color:'yellow',
+                        }, {
+                            name: 'Otro',
+                            y: +(({{totales_por_tipo.3}}*100)/{{total_tareas}}).toFixed(1),
+                            color:'blue',
+                        }],
+                        center: [135, 15],
+                        size: 100,
+                        innerSize: '70%',
+                        showInLegend: false,
+                        dataLabels: {
+                            enabled: false
+                        }
+                    }]
+                });        
+            </script>
+        </div>
+        <! FIN CONTENEDOR TAREAS POR TIPO  -->
+        <! CONTENEDOR TAREAS POR PRIORIDAD  -->
+        <div class="chart-container-item">
+            <figure class="highcharts-figure">
+                <div id="containerbarraytortatres"></div>
+                <p class="highcharts-description">
+                </p>
+            </figure>
+            <script>
+                Highcharts.chart('containerbarraytortatres', {
+                    title: {
+                        text: 'Tareas por Prioridad',
+                        align: 'left'
+                    },
+                    xAxis: {
+                        categories: ['Alta', 'Baja', 'Media']
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Tareas'
+                        }
+                    },
+                    tooltip: {
+                        valueSuffix: ''
+                    },
+                    plotOptions: {
+                        series: {
+                            borderRadius: '25%'
+                        }
+                    },
+                    series: [{
+                        type: 'column',
+                        name: '',
+                        data: [{
+                            name: 'Alta',
+                            color: 'red',
+                            y: {{totales_por_prioridad.0}}
+                        }, {
+                            name: 'Baja',
+                            color: '#00FF00',
+                            y: {{totales_por_prioridad.2}}
+                        },
+                        {
+                            name: 'Media',
+                            color: 'yellow',
+                            y: {{totales_por_prioridad.1}}
+                        }],
+                    }, {
+                        type: 'line',
+                        step: 'center',
+                        name: '',
+                        data: [{{totales_por_prioridad.0}}, {{totales_por_prioridad.2}}, {{totales_por_prioridad.1}}],
+                        marker: {
+                            lineWidth: 2,
+                            lineColor: Highcharts.getOptions().colors[1],
+                            fillColor: 'white'
+                        }
+                    }, {
+                        type: 'pie',
+                        name: '% ',
+                        data: [{
+                            name: 'Alta',
+                            y: + (({{totales_por_prioridad.0}}*100)/{{total_tareas}}).toFixed(1),
+                            color: 'red', // 
+                            dataLabels: {
+                                enabled: true,
+                                distance: -50,
+                                format: '{{total_tareas}} Tareas',
+                                style: {
+                                    fontSize: '15px'
+                                }
+                            }
+                        }, {
+                            name: 'Baja',
+                            y: +(({{totales_por_prioridad.2}}*100)/{{total_tareas}}).toFixed(1),
+                            color: '#00FF00',
+                        }, {
+                            name: 'Media',
+                            y: +(({{totales_por_prioridad.1}}*100)/{{total_tareas}}).toFixed(1),
+                            color:'yellow',
+                        }],
+                        center: [45, 15],
+                        size: 100,
+                        innerSize: '70%',
+                        showInLegend: false,
+                        dataLabels: {
+                            enabled: false
+                        }
+                    }]
+                });        
+            </script>
+        </div>
+        <! FIN CONTENEDOR TAREAS POR PRIORIDAD  -->
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
