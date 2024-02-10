@@ -9,6 +9,7 @@ from django.db import models
 def tarea_x_estado(request):
     
     tareas = Task.objects.all()
+    total_tareas = tareas.count()
 
     tareas_completadas = tareas.filter(state = "COMPLETADA")
     tareas_pendientes = tareas.filter(state = "PENDIENTE")
@@ -43,6 +44,7 @@ def tarea_x_estado(request):
     total_por_prioridad = [total_alta,total_media,total_baja]
     
     return render(request, 'tareas/graficos.html', {
+        'total_tareas': total_tareas,
         'totales_por_estado': total_por_estado,
         'totales_por_tipo': total_por_tipo,
         'totales_por_prioridad': total_por_prioridad

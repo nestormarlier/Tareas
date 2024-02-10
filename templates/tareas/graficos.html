@@ -2,31 +2,27 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gráfico de Tareas</title>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
-    <figure class="highcharts-figure">
-        <div id="containerpie"></div>
-        <p class="highcharts-description">
-            Pie charts are very popular for showing a compact overview of a
-            composition or comparison. While they can be harder to read than
-            column charts, they remain a popular choice for small datasets.
-        </p>
-    </figure>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+    <!-- Incluye los archivos CSS de Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Incluye los archivos CSS de Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div>
-        <ul class="object-tools">
-            <li>
-                <a href="{% url 'admin:index' %}" class="addlink">
-                    <img src="{% static 'admin/img/icon-changelink.svg' %}" alt="Redirigir a Otra Página">
-                    Sistema de gestión de tareas
-                </a>
-            </li>
-        </ul>
+    <div class="container mt-5">
+        <a href="{% url 'admin:index' %}" class="text-decoration-none">
+            <h1 class="display-4">
+                <i class="fas fa-cogs text-primary"></i> Sistema de Gestión de Tareas Cambaceres
+            </h1>
+        </a>
     </div>
     <style>
         .chart-container {
@@ -53,7 +49,7 @@
                 },
                 subtitle: {
                     text:
-                        'Source: Envaplast Cambaceres',
+                        '',
                     align: 'center'
                 },
                 xAxis: {
@@ -70,19 +66,33 @@
                     }
                 },
                 tooltip: {
-                    valueSuffix: ' (UNIDAD)'
+                    valueSuffix: ' Tareas'
                 },
                 plotOptions: {
                     column: {
                         pointPadding: 0.2,
                         borderWidth: 0,
-                        colorByPoint: true
+                        {% comment %} colorBycoloPoint: true {% endcomment %}
                     }
                 },
+                
                 series: [
                     {
-                        name: 'Estados',
-                        data: {{ totales_por_estado }}
+                        name: '',
+                        data: [{
+                            name: 'Point 1',
+                            color: '#00FF00',
+                            y: {{totales_por_estado.0}}
+                        }, {
+                            name: 'Point 2',
+                            color: 'red',
+                            y: {{totales_por_estado.1}}
+                        },
+                        {
+                            name: 'Point 2',
+                            color: 'yellow',
+                            y: {{totales_por_estado.2}}
+                        }],
                     }
                 ]
             });
@@ -104,14 +114,14 @@
                 },
                 subtitle: {
                     text:
-                        'Source: Envaplast Cambaceres',
+                        '',
                     align: 'center'
                 },
                 xAxis: {
                     categories: ['Corretiva', 'Preventiva', 'Predictiva', 'Otro'],
                     crosshair: true,
                     accessibility: {
-                        description: 'Tipos'
+                        description: ''
                     }
                 },
                 yAxis: {
@@ -121,18 +131,18 @@
                     }
                 },
                 tooltip: {
-                    valueSuffix: ' (UNIDAD)'
+                    valueSuffix: ' Tareas'
                 },
                 plotOptions: {
                     column: {
                         pointPadding: 0.2,
                         borderWidth: 0,
-                        colorByPoint: false
+                        colorByPoint: true
                     }
                 },
                 series: [
                     {
-                        name: 'Tipos',
+                        name: '',
                         data: {{ totales_por_tipo }}
                     }
                 ]
@@ -155,14 +165,14 @@
             },
             subtitle: {
                 text:
-                    'Source: Envaplast Cambaceres',
+                    '',
                 align: 'center'
             },
             xAxis: {
                 categories: ['Alta', 'Baja', 'Media'],
                 crosshair: true,
                 accessibility: {
-                    description: 'Tipos'
+                    description: ''
                 }
             },
             yAxis: {
@@ -172,7 +182,7 @@
                 }
             },
             tooltip: {
-                valueSuffix: ' (UNIDAD)'
+                valueSuffix: ' Tareas'
             },
             plotOptions: {
                 column: {
@@ -183,8 +193,21 @@
             },
             series: [
                 {
-                    name: 'Prioridad',
-                    data: {{ totales_por_prioridad }}
+                    name: '',
+                    data: [{
+                        name: 'Point 1',
+                        color: 'red',
+                        y: {{totales_por_prioridad.0}}
+                    }, {
+                        name: 'Point 2',
+                        color: '#00FF00',
+                        y: {{totales_por_prioridad.1}}
+                    },
+                    {
+                        name: 'Point 2',
+                        color: 'yellow',
+                        y: {{totales_por_prioridad.2}}
+                    }],
                 }
             ]
             });
@@ -194,83 +217,83 @@
     </div>
 
     <! CONTENEDOR GRAFICOS PIE  -->
-        <scrip>
-            Highcharts.chart('containerpie', {
-                title: {
-                    text: 'Sales of petroleum products March, Norway',
-                    align: 'left'
-                },
-                xAxis: {
-                    categories: ['Jet fuel', 'Duty-free diesel', 'Petrol', 'Diesel', 'Gas oil']
-                },
-                yAxis: {
-                    title: {
-                        text: 'Million liters'
-                    }
-                },
-                tooltip: {
-                    valueSuffix: ' million liters'
-                },
-                plotOptions: {
-                    series: {
-                        borderRadius: '25%'
-                    }
-                },
-                series: [{
-                    type: 'column',
-                    name: '2020',
-                    data: [59, 83, 65, 228, 184]
-                }, {
-                    type: 'column',
-                    name: '2021',
-                    data: [24, 79, 72, 240, 167]
-                }, {
-                    type: 'column',
-                    name: '2022',
-                    data: [58, 88, 75, 250, 176]
-                }, {
-                    type: 'line',
-                    step: 'center',
-                    name: 'Average',
-                    data: [47, 83.33, 70.66, 239.33, 175.66],
-                    marker: {
-                        lineWidth: 2,
-                        lineColor: Highcharts.getOptions().colors[3],
-                        fillColor: 'white'
-                    }
-                }, {
-                    type: 'pie',
-                    name: 'Total',
-                    data: [{
-                        name: '2020',
-                        y: 619,
-                        color: Highcharts.getOptions().colors[0], // 2020 color
-                        dataLabels: {
-                            enabled: true,
-                            distance: -50,
-                            format: '{point.total} M',
-                            style: {
-                                fontSize: '15px'
-                            }
+    <figure class="highcharts-figure">
+        <div id="containerpie"></div>
+        <p class="highcharts-description">
+            Gráfico con todas las tareas.
+        </p>
+    </figure>
+    <script>
+        Highcharts.chart('containerpie', {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: {{total_tareas}} +' Tareas'
+            },
+            tooltip: {
+                valueSuffix: '%'
+            },
+            subtitle: {
+                text:
+                ''
+            },
+            plotOptions: {
+                series: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: [{
+                        enabled: true,
+                        distance: 20
+                    }, {
+                        enabled: true,
+                        distance: -40,
+                        format: '{point.percentage:.1f}%',
+                        style: {
+                            fontSize: '1.2em',
+                            textOutline: 'none',
+                            opacity: 0.7
+                        },
+                        filter: {
+                            operator: '>',
+                            property: 'percentage',
+                            value: 10
                         }
-                    }, {
-                        name: '2021',
-                        y: 586,
-                        color: Highcharts.getOptions().colors[1] // 2021 color
-                    }, {
-                        name: '2022',
-                        y: 647,
-                        color: Highcharts.getOptions().colors[2] // 2022 color
-                    }],
-                    center: [75, 65],
-                    size: 100,
-                    innerSize: '70%',
-                    showInLegend: false,
-                    dataLabels: {
-                        enabled: false
-                    }
-                }]
-            });
-        </script>
+                    }]
+                }
+            },
+            series: [
+                {
+                    name: 'Porcentage',
+                    colorByPoint: true,
+                    data: [
+                        {
+                            name: 'Agua',
+                            y: 55.02
+                        },
+                        {
+                            name: 'Fat',
+                            sliced: true,
+                            selected: true,
+                            y: 26.71
+                        },
+                        {
+                            name: 'Carbohydrates',
+                            y: 1.09
+                        },
+                        {
+                            name: 'Protein',
+                            y: 15.5
+                        },
+                        {
+                            name: 'Ash',
+                            y: 1.68
+                        }
+                    ]
+                }
+            ]
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
