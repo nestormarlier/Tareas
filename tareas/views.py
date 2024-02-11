@@ -1,10 +1,5 @@
 from django.shortcuts import render
-
-import matplotlib.pyplot as plt
-from io import BytesIO
-import base64
 from .models import Task
-from django.db import models
 
 def tarea_x_estado(request):
     
