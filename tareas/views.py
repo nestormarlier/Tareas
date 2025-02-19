@@ -1,9 +1,6 @@
 from django.shortcuts import render
 from .models import Task
 
-def home(request):
-    return render(request, 'tareas/home.html', {'title': 'Néstor Marlier'})
-
 def tarea_x_estado(request):
     
     tareas = Task.objects.all()
