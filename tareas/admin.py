@@ -9,7 +9,7 @@ class TaskFileInline(admin.TabularInline):
     model = TaskFile
     extra = 1  # Permitir agregar múltiples archivos en el formulario de tareas
     can_delete = True  # Habilita la opción de eliminar archivos
-    fields = ('archivo', 'mostrar_archivo',)
+    fields = ('archivo', 'mostrar_archivo')  # Quitamos DELETE de los fields
     readonly_fields = ('mostrar_archivo',)  # Mostrar archivo en formato visual
 
     def mostrar_archivo(self, obj):

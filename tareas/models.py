@@ -52,7 +52,7 @@ class TaskFile(models.Model):
                 return self.archivo.name.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))
 
             def __str__(self):
-                return self.archivo.name
+                return self.archivo.name if self.archivo else "Sin archivo"
             
             class Meta:
                 verbose_name_plural = 'Archivos Adjuntos'
