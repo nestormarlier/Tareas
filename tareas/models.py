@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 class Activo(models.Model):
      nombre=models.CharField(max_length=100, blank=False)
@@ -41,3 +43,21 @@ class Task(models.Model):
         
         class Meta:
             verbose_name_plural = 'Tareas'
+
+class TaskFile(models.Model):
+            task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='archivos')
+            archivo = models.FileField(upload_to='tareas_adjuntos/', verbose_name='Archivo Adjunto')
+
+            def es_imagen(self):
+                return self.archivo.name.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))
+
+            def __str__(self):
+                return self.archivo.name
+            
+            class Meta:
+                verbose_name_plural = 'Archivos Adjuntos'
+
+@receiver(post_delete, sender=TaskFile)
+def eliminar_archivo(sender, instance, **kwargs):
+    if instance.archivo:
+        instance.archivo.delete(False)

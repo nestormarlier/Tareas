@@ -1,5 +1,7 @@
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
 from django.shortcuts import render
-from .models import Task
+from .models import Task,TaskFile
 
 def tarea_x_estado(request):
     
@@ -47,3 +49,11 @@ def tarea_x_estado(request):
         'totales_por_tipo': total_por_tipo,
         'totales_por_prioridad': total_por_prioridad
         })
+
+def eliminar_archivo(request, archivo_id):
+    archivo = get_object_or_404(TaskFile, id=archivo_id)
+    if request.method == 'POST':
+        archivo.archivo.delete()  # Eliminar archivo del servidor
+        archivo.delete()  # Eliminar registro de la base de datos
+        messages.success(request, "Archivo eliminado correctamente.")
+    return redirect(request.META.get('HTTP_REFERER', '/'))
