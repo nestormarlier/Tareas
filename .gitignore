@@ -30,6 +30,8 @@ staticfiles/
 *.js
 *.map
 
+!static/css/main.css
+
 # Virtual environment
 venv/
 

@@ -1,0 +1,62 @@
+/* General styles for larger screens */
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.chart-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.chart-container-item {
+    width: 30%; /* Adjust as needed */
+    margin-bottom: 20px;
+}
+
+.redes-sociales {
+    font-size: 28px; /* Tamaño de los iconos */
+}
+
+.redes-sociales i {
+    margin: 0 10px; /* Espacio entre los iconos */
+    color: black; /* Color de los iconos */
+}
+.redes-sociales :hover {
+    color: #007BFF; /* Color de los iconos */
+}
+
+/* Responsive styles for medium-sized screens */
+@media only screen and (max-width: 992px) {
+    .chart-container-item {
+        width: 48%; /* Adjust the width for medium-sized screens */
+    }
+}
+
+/* Responsive styles for smaller screens */
+@media only screen and (max-width: 768px) {
+    .chart-container-item {
+        width: 100%; /* Full width for smaller screens */
+    }
+}
+
+/* Additional styles for smaller devices */
+@media only screen and (max-width: 576px) {
+    .chart-container-item {
+        width: 100%; /* Full width for devices with a maximum width of 576 pixels */
+    }
+
+    h1.display-4 {
+        font-size: 1.5rem; /* Adjust the font size for better readability on smaller screens */
+    }
+}
+
+/* Bootstrap classes override */
+h1.display-4 {
+    font-size: 2rem; /* Adjust the font size for better readability on larger screens */
+}
