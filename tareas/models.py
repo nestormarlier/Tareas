@@ -37,6 +37,8 @@ class Task(models.Model):
         completed_at = models.DateTimeField(null=True, blank=True, verbose_name='Completada')
         completed_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True,related_name='tasks_completed',verbose_name='Usuario Realizo')
         dias_transcurridos = models.IntegerField(default=0)
+        latitude = models.FloatField(null=True, blank=True)
+        longitude = models.FloatField(null=True, blank=True)
 
         def __str__(self):
             return str(self.id) + '-' + self.description
