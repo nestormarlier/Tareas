@@ -28,7 +28,7 @@ class Task(models.Model):
     )
 
         user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks_created', verbose_name='Usuario Crea')
-        maquina = models.ForeignKey(Activo,on_delete=models.CASCADE, null=True, blank=True)
+        maquina = models.ForeignKey(Activo,on_delete=models.CASCADE, null=True, blank=True, verbose_name='Activo')
         tipo = models.CharField(max_length=10, choices=TIPO_TAREA)
         description = models.TextField(verbose_name='Descripción')
         priority = models.CharField(max_length=10,default='ALTA',choices=ORDEN_PRIORIDAD,verbose_name='Prioridad')

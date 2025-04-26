@@ -29,7 +29,7 @@ class TaskFileInline(admin.TabularInline):
 
 class TaskAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     exclude = ('user',)  # Excluye el campo "usuario" del formulario de administración
-    
+    list_display = ('maquina','description','mostrar_ubicacion','custom_created_at','days_since_created','tipo','mostrar_adjuntos','priority_color_css', 'state_color_css', 'user', 'completed_user')
     readonly_fields = ('user','created_at','completed_at','completed_user','dias_transcurridos')  # Hace que el campo "usuario" sea de solo lectura
     inlines = [TaskFileInline] # Archivos adjuntos
     
@@ -146,7 +146,7 @@ class TaskAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     actions = [exportar_tareas_csv]
 
     search_fields = ['maquina__nombre']
-    list_display = ( 'mostrar_ubicacion','maquina','description','custom_created_at','days_since_created','tipo','mostrar_adjuntos','priority_color_css', 'state_color_css', 'user', 'completed_user')
+    
     list_filter = (('state',MultiSelectFieldListFilter), 'tipo','priority',)
 
     def has_delete_permission(self, request, obj=None):
